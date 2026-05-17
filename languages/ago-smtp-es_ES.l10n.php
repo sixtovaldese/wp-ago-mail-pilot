@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 return [
 'x-generator' => 'aGo SMTP',
 'translation-revision-date' => '2026-05-17',

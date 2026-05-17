@@ -34,7 +34,9 @@ class Plugin {
     }
 
     public function load_textdomain(): void {
-        load_plugin_textdomain( 'ago-smtp', false, dirname( plugin_basename( AGO_SMTP_FILE ) ) . '/languages' );
+        // WordPress 4.6+ auto-carga traducciones del plugin desde su /languages/.
+        // Cuando esta hosteado en WP.org, WP las gestiona automatico via just_in_time.
+        // No se necesita llamada explicita a load_plugin_textdomain().
     }
 
     public function register_admin_menu(): void {

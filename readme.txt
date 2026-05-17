@@ -9,7 +9,7 @@ Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Send WordPress emails via SMTP with 8 provider presets, a step-by-step credentials wizard, encrypted password storage, DNS health check (SPF / DKIM / DMARC) and failure rate alerts. Completely free.
+SMTP for WordPress with 8 provider presets, step-by-step credentials wizard, DNS health check and failure alerts. Free.
 
 == Description ==
 
