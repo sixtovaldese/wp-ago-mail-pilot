@@ -360,10 +360,10 @@ class Page {
                             <?php esc_html_e( 'Free WordPress plugins from the same team. No upsell pressure.', 'ago-smtp' ); ?>
                         </p>
                         <ul class="ago-features">
-                            <li><strong>aGo AI Chatbot</strong> — <?php esc_html_e( 'AI customer support widget for your site.', 'ago-smtp' ); ?></li>
-                            <li><strong>aGo Legal</strong> — <?php esc_html_e( 'GDPR / LGPD / Chile Law 21.719 compliance toolkit.', 'ago-smtp' ); ?></li>
-                            <li><strong>aGo Cleanup</strong> — <?php esc_html_e( 'Remove WordPress bloat and front-end clutter.', 'ago-smtp' ); ?></li>
-                            <li><strong>aGo Harden</strong> — <?php esc_html_e( 'Lightweight security hardening toggles.', 'ago-smtp' ); ?></li>
+                            <li><strong>aGo AI Chatbot</strong>, <?php esc_html_e( 'AI customer support widget for your site.', 'ago-smtp' ); ?></li>
+                            <li><strong>aGo Legal</strong>, <?php esc_html_e( 'GDPR / LGPD / Chile Law 21.719 compliance toolkit.', 'ago-smtp' ); ?></li>
+                            <li><strong>aGo Cleanup</strong>, <?php esc_html_e( 'Remove WordPress bloat and front-end clutter.', 'ago-smtp' ); ?></li>
+                            <li><strong>aGo Harden</strong>, <?php esc_html_e( 'Lightweight security hardening toggles.', 'ago-smtp' ); ?></li>
                         </ul>
                         <p>
                             <a href="https://ago.cl/herramientas/" target="_blank" rel="noopener" class="button button-secondary" style="width:100%;text-align:center">

@@ -5,7 +5,7 @@ Tags: smtp, email, mail, phpmailer, mail-log
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,12 @@ Deactivating the plugin does not delete the stored data. Uninstalling the plugin
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix: `load_plugin_textdomain()` properly invoked for bundled translations (previous build relied on stale Redis cache layer).
+* Fix: removed legacy `install_translations()` that copied `.l10n.php` files to `WP_LANG_DIR/plugins/`.
+* Fix: ABSPATH guard added to `.l10n.php` files.
+* Fix: translator comments added on `__()` calls with placeholders.
+
 = 1.0.0 =
 * Initial release.
 * 8 provider presets: Gmail, SendGrid, Amazon SES, Brevo, Resend, MailerSend, SMTP2GO, Acumbamail.
@@ -136,6 +142,9 @@ Deactivating the plugin does not delete the stored data. Uninstalling the plugin
 * Recent log of last 10 outgoing emails in `wp_options` (no custom tables).
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Translation loading fixes. Recommended for all users.
 
 = 1.0.0 =
 Initial release.

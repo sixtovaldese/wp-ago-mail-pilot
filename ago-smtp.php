@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: aGo SMTP
- * Plugin URI:  https://ago.cl
+ * Plugin URI:  https://ago.cl/herramientas/
  * Description: Send WordPress emails via SMTP with provider presets, a step-by-step credentials wizard, and a simple test email. Minimal, no external API calls.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * Author:      aGo Lab
- * Author URI:  https://ago.cl
+ * Author URI:  https://ago.cl/
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ago-smtp
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AGO_SMTP_VERSION', '1.0.0' );
+define( 'AGO_SMTP_VERSION', '1.0.1' );
 define( 'AGO_SMTP_FILE', __FILE__ );
 define( 'AGO_SMTP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AGO_SMTP_URL', plugin_dir_url( __FILE__ ) );

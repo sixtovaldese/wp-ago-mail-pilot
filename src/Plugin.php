@@ -34,9 +34,12 @@ class Plugin {
     }
 
     public function load_textdomain(): void {
-        // WordPress 4.6+ auto-carga traducciones del plugin desde su /languages/.
-        // Cuando esta hosteado en WP.org, WP las gestiona automatico via just_in_time.
-        // No se necesita llamada explicita a load_plugin_textdomain().
+        // WP 6.5+ just-in-time loading busca .l10n.php solo en WP_LANG_DIR/plugins/
+        // (translate.wordpress.org). Para los archivos bundleados en /languages/ del
+        // plugin sigue siendo obligatorio load_plugin_textdomain. El warning de
+        // Plugin Check load_plugin_textdomain.WrongDirectory aplica a plugins que
+        // ya tienen traducciones publicadas en WP.org, no a Lites pre-aprobacion.
+        load_plugin_textdomain( 'ago-smtp', false, dirname( plugin_basename( AGO_SMTP_FILE ) ) . '/languages' );
     }
 
     public function register_admin_menu(): void {

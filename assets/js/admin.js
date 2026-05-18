@@ -1,5 +1,5 @@
 /**
- * aGo SMTP — admin UI helpers
+ * aGo SMTP, admin UI helpers
  *
  * Solo dos responsabilidades:
  *  1. Auto-rellenar host/port/encryption al elegir preset.
