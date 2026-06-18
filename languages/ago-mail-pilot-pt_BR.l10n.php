@@ -1,17 +1,17 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 return [
-'x-generator' => 'aGo SMTP',
+'x-generator' => 'aGo Mail Pilot',
 'translation-revision-date' => '2026-05-17',
 'plural-forms' => 'nplurals=2; plural=n > 1;',
-'project-id-version' => 'aGo SMTP 1.0.0',
+'project-id-version' => 'aGo Mail Pilot 1.0.0',
 'language' => 'pt_BR',
 'messages' => [
 
 // UI core
 'aGo Tools' => 'aGo Ferramentas',
-'aGo SMTP' => 'aGo SMTP',
-'SMTP' => 'SMTP',
+'aGo Mail Pilot' => 'aGo Mail Pilot',
+'Mail Pilot' => 'Mail Pilot',
 'You do not have permission.' => 'Você não tem permissão.',
 'Settings saved.' => 'Configurações salvas.',
 'Invalid From Email address.' => 'Endereço de remetente inválido.',
@@ -33,7 +33,7 @@ return [
 'Password' => 'Senha',
 'Leave blank to keep current password' => 'Deixe em branco para manter a senha atual',
 'Stored encrypted (AES-256-CBC) tied to your WordPress AUTH_KEY.' => 'Armazenada criptografada (AES-256-CBC) usando o AUTH_KEY do WordPress.',
-'For higher security, define <code>AGO_SMTP_PASSWORD</code> in <code>wp-config.php</code>. When defined, the constant overrides this field.' => 'Para mais segurança, defina <code>AGO_SMTP_PASSWORD</code> no <code>wp-config.php</code>. Quando definida, a constante sobrescreve este campo.',
+'For higher security, define <code>AGOMP_PASSWORD</code> in <code>wp-config.php</code>. When defined, the constant overrides this field.' => 'Para mais segurança, defina <code>AGOMP_PASSWORD</code> no <code>wp-config.php</code>. Quando definida, a constante sobrescreve este campo.',
 'From name' => 'Nome do remetente',
 'From email' => 'E-mail do remetente',
 'Save settings' => 'Salvar configurações',
@@ -49,12 +49,12 @@ return [
 'Cannot connect to the SMTP host. Check host name, port and firewall. Most providers use 587 (TLS) or 465 (SSL).' => 'Não foi possível conectar ao servidor SMTP. Verifique host, porta e firewall.',
 'The From email is not authorized by the provider. Verify the sender or the whole sending domain in the provider dashboard.' => 'O e-mail remetente não está autorizado pelo provedor. Verifique o remetente ou o domínio inteiro.',
 'The provider rejected the message. Usually SPF, DKIM or DMARC is wrong, or the recipient blocks unverified senders.' => 'O provedor rejeitou a mensagem. Geralmente SPF, DKIM ou DMARC estão errados.',
-'[%s] aGo SMTP test email' => '[%s] E-mail de teste aGo SMTP',
+'[%s] aGo Mail Pilot test email' => '[%s] E-mail de teste aGo Mail Pilot',
 'If you can read this, the SMTP configuration is working.
 
-Sent by aGo SMTP.' => 'Se você consegue ler isso, a configuração SMTP está funcionando.
+Sent by aGo Mail Pilot.' => 'Se você consegue ler isso, a configuração SMTP está funcionando.
 
-Enviado pelo aGo SMTP.',
+Enviado pelo aGo Mail Pilot.',
 
 // DNS auditor
 'DNS health check (SPF, DKIM, DMARC)' => 'Diagnóstico DNS (SPF, DKIM, DMARC)',
@@ -84,7 +84,21 @@ Enviado pelo aGo SMTP.',
 'Do not alert until at least this many emails have been sent.' => 'Não alertar até pelo menos esta quantidade de e-mails ter sido enviada.',
 'Alert recipient' => 'Destinatário do alerta',
 '[%s] SMTP failure rate alert' => '[%s] Alerta de taxa de falha SMTP',
-"Your site %4\$s is failing to deliver email.\n\nFailure rate in the last %2\$d outgoing emails: %1\$d%% (%3\$d failed).\n\nReview the log: %5\$s\nRun the DNS audit: %6\$s\n\nThis alert is throttled to one per 24 hours." => "Seu site %4\$s não está entregando e-mails corretamente.\n\nTaxa de falha nos últimos %2\$d envios: %1\$d%% (%3\$d falharam).\n\nRevise o registro: %5\$s\nRode o diagnóstico DNS: %6\$s\n\nEste alerta é limitado a um por 24 horas.",
+'Your site %4$s is failing to deliver email.
+
+Failure rate in the last %2$d outgoing emails: %1$d%% (%3$d failed).
+
+Review the log: %5$s
+Run the DNS audit: %6$s
+
+This alert is throttled to one per 24 hours.' => 'Seu site %4$s não está entregando e-mails corretamente.
+
+Taxa de falha nos últimos %2$d envios: %1$d%% (%3$d falharam).
+
+Revise o registro: %5$s
+Rode o diagnóstico DNS: %6$s
+
+Este alerta é limitado a um por 24 horas.',
 
 // Email log
 'Recent email log' => 'Registro de e-mails recente',

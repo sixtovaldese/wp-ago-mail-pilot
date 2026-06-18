@@ -1,14 +1,14 @@
 <?php
 
-namespace AgoLab\Smtp;
+namespace AgoLab\MailPilot;
 
 defined( 'ABSPATH' ) || exit;
 
 class Plugin {
 
     private static ?self $instance = null;
-    public const OPTION_KEY = 'ago_smtp_settings';
-    public const LOG_KEY    = 'ago_smtp_log';
+    public const OPTION_KEY = 'agomp_settings';
+    public const LOG_KEY    = 'agomp_log';
     public const LOG_MAX    = 10;
 
     public static function instance(): self {
@@ -22,10 +22,10 @@ class Plugin {
         add_action( 'init', [ $this, 'load_textdomain' ] );
         add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-        add_action( 'admin_post_ago_smtp_save', [ $this, 'handle_save' ] );
-        add_action( 'admin_post_ago_smtp_test', [ $this, 'handle_test' ] );
-        add_action( 'admin_post_ago_smtp_clear_log', [ $this, 'handle_clear_log' ] );
-        add_action( 'admin_post_ago_smtp_dns_audit', [ $this, 'handle_dns_audit' ] );
+        add_action( 'admin_post_agomp_save', [ $this, 'handle_save' ] );
+        add_action( 'admin_post_agomp_test', [ $this, 'handle_test' ] );
+        add_action( 'admin_post_agomp_clear_log', [ $this, 'handle_clear_log' ] );
+        add_action( 'admin_post_agomp_dns_audit', [ $this, 'handle_dns_audit' ] );
         add_action( 'admin_notices', [ $this, 'maybe_legacy_password_notice' ] );
 
         new Mailer();
@@ -39,16 +39,16 @@ class Plugin {
         // plugin sigue siendo obligatorio load_plugin_textdomain. El warning de
         // Plugin Check load_plugin_textdomain.WrongDirectory aplica a plugins que
         // ya tienen traducciones publicadas en WP.org, no a Lites pre-aprobacion.
-        load_plugin_textdomain( 'ago-smtp', false, dirname( plugin_basename( AGO_SMTP_FILE ) ) . '/languages' );
+        load_plugin_textdomain( 'ago-mail-pilot', false, dirname( plugin_basename( AGOMP_FILE ) ) . '/languages' );
     }
 
     public function register_admin_menu(): void {
-        if ( empty( $GLOBALS['admin_page_hooks']['ago-tools'] ) ) {
+        if ( empty( $GLOBALS['admin_page_hooks']['agolab-tools'] ) ) {
             add_menu_page(
-                __( 'aGo Tools', 'ago-smtp' ),
-                __( 'aGo Tools', 'ago-smtp' ),
+                __( 'aGo Tools', 'ago-mail-pilot' ),
+                __( 'aGo Tools', 'ago-mail-pilot' ),
                 'manage_options',
-                'ago-tools',
+                'agolab-tools',
                 '__return_null',
                 'dashicons-hammer',
                 81
@@ -56,35 +56,35 @@ class Plugin {
         }
 
         add_submenu_page(
-            'ago-tools',
-            __( 'aGo SMTP', 'ago-smtp' ),
-            __( 'SMTP', 'ago-smtp' ),
+            'agolab-tools',
+            __( 'aGo Mail Pilot', 'ago-mail-pilot' ),
+            __( 'Mail Pilot', 'ago-mail-pilot' ),
             'manage_options',
-            'ago-smtp',
+            'ago-mail-pilot',
             [ Admin\Page::class, 'render' ]
         );
 
-        remove_submenu_page( 'ago-tools', 'ago-tools' );
+        remove_submenu_page( 'agolab-tools', 'agolab-tools' );
     }
 
     public function enqueue_assets( string $hook ): void {
-        if ( ! str_ends_with( $hook, '_page_ago-smtp' ) ) {
+        if ( ! str_ends_with( $hook, '_page_ago-mail-pilot' ) ) {
             return;
         }
         wp_enqueue_style(
-            'ago-smtp-admin',
-            AGO_SMTP_URL . 'assets/css/admin.css',
+            'agomp-admin',
+            AGOMP_URL . 'assets/css/admin.css',
             [],
-            AGO_SMTP_VERSION
+            AGOMP_VERSION
         );
         wp_enqueue_script(
-            'ago-smtp-admin',
-            AGO_SMTP_URL . 'assets/js/admin.js',
+            'agomp-admin',
+            AGOMP_URL . 'assets/js/admin.js',
             [],
-            AGO_SMTP_VERSION,
+            AGOMP_VERSION,
             true
         );
-        wp_localize_script( 'ago-smtp-admin', 'agoSmtpData', [
+        wp_localize_script( 'agomp-admin', 'agompData', [
             'presets' => Presets::all(),
             'guides'  => Presets::guides(),
         ] );
@@ -92,9 +92,9 @@ class Plugin {
 
     public function handle_save(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You do not have permission.', 'ago-smtp' ) );
+            wp_die( esc_html__( 'You do not have permission.', 'ago-mail-pilot' ) );
         }
-        check_admin_referer( 'ago_smtp_save' );
+        check_admin_referer( 'agomp_save' );
 
         $current = get_option( self::OPTION_KEY, [] );
         $in      = wp_unslash( $_POST );
@@ -122,26 +122,28 @@ class Plugin {
         }
 
         if ( $settings['from_email'] && ! is_email( $settings['from_email'] ) ) {
-            $this->redirect_back( 'error', __( 'Invalid From Email address.', 'ago-smtp' ) );
+            $this->redirect_back( 'error', __( 'Invalid From Email address.', 'ago-mail-pilot' ) );
         }
 
         update_option( self::OPTION_KEY, $settings );
-        $this->redirect_back( 'success', __( 'Settings saved.', 'ago-smtp' ) );
+        $this->redirect_back( 'success', __( 'Settings saved.', 'ago-mail-pilot' ) );
     }
 
     public function handle_test(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You do not have permission.', 'ago-smtp' ) );
+            wp_die( esc_html__( 'You do not have permission.', 'ago-mail-pilot' ) );
         }
-        check_admin_referer( 'ago_smtp_test' );
+        check_admin_referer( 'agomp_test' );
 
         $to   = wp_get_current_user()->user_email;
         $subj = sprintf(
             /* translators: %s: site name */
-            __( '[%s] aGo SMTP test email', 'ago-smtp' ),
+            __( '[%s] aGo Mail Pilot test email', 'ago-mail-pilot' ),
             get_bloginfo( 'name' )
         );
-        $body = __( "If you can read this, the SMTP configuration is working.\n\nSent by aGo SMTP.", 'ago-smtp' );
+        $body = __( 'If you can read this, the SMTP configuration is working.
+
+Sent by aGo Mail Pilot.', 'ago-mail-pilot' );
 
         // Capturar errores de PHPMailer y wp_mail_failed.
         $error_message = '';
@@ -161,20 +163,20 @@ class Plugin {
         if ( $sent ) {
             $this->redirect_back( 'success', sprintf(
                 /* translators: %s: email address */
-                __( 'Test email sent to %s. Check your inbox.', 'ago-smtp' ),
+                __( 'Test email sent to %s. Check your inbox.', 'ago-mail-pilot' ),
                 $to
             ) );
         }
 
-        $detail = $error_message ?: __( 'Unknown SMTP error.', 'ago-smtp' );
+        $detail = $error_message ?: __( 'Unknown SMTP error.', 'ago-mail-pilot' );
         $hint   = $this->error_hint( $error_message );
         $this->redirect_back(
             'error',
             sprintf(
                 /* translators: %1$s: error message, %2$s: hint */
-                __( 'Test email failed: %1$s %2$s', 'ago-smtp' ),
+                __( 'Test email failed: %1$s %2$s', 'ago-mail-pilot' ),
                 '<code>' . esc_html( $detail ) . '</code>',
-                $hint ? '<br><strong>' . esc_html__( 'Hint:', 'ago-smtp' ) . '</strong> ' . esc_html( $hint ) : ''
+                $hint ? '<br><strong>' . esc_html__( 'Hint:', 'ago-mail-pilot' ) . '</strong> ' . esc_html( $hint ) : ''
             )
         );
     }
@@ -185,34 +187,34 @@ class Plugin {
     private function error_hint( string $error ): string {
         $e = strtolower( $error );
         if ( str_contains( $e, '535' ) || str_contains( $e, 'authentication' ) || str_contains( $e, 'no se pudo identificar' ) || str_contains( $e, 'identificar' ) ) {
-            return __( 'Authentication failed. The username or password is wrong, or the provider requires a special user format (e.g. SES uses an AKIA... user, SendGrid uses the literal word "apikey", Mailjet uses API Key as user). Open the credentials guide above.', 'ago-smtp' );
+            return __( 'Authentication failed. The username or password is wrong, or the provider requires a special user format (e.g. SES uses an AKIA... user, SendGrid uses the literal word "apikey", Mailjet uses API Key as user). Open the credentials guide above.', 'ago-mail-pilot' );
         }
         if ( str_contains( $e, 'connect' ) || str_contains( $e, 'connection refused' ) || str_contains( $e, 'timed out' ) ) {
-            return __( 'Cannot connect to the SMTP host. Check host name, port and firewall. Most providers use 587 (TLS) or 465 (SSL).', 'ago-smtp' );
+            return __( 'Cannot connect to the SMTP host. Check host name, port and firewall. Most providers use 587 (TLS) or 465 (SSL).', 'ago-mail-pilot' );
         }
         if ( str_contains( $e, 'sender' ) || str_contains( $e, 'from' ) || str_contains( $e, 'address' ) ) {
-            return __( 'The From email is not authorized by the provider. Verify the sender or the whole sending domain in the provider dashboard.', 'ago-smtp' );
+            return __( 'The From email is not authorized by the provider. Verify the sender or the whole sending domain in the provider dashboard.', 'ago-mail-pilot' );
         }
         if ( str_contains( $e, '550' ) || str_contains( $e, 'rejected' ) ) {
-            return __( 'The provider rejected the message. Usually SPF, DKIM or DMARC is wrong, or the recipient blocks unverified senders.', 'ago-smtp' );
+            return __( 'The provider rejected the message. Usually SPF, DKIM or DMARC is wrong, or the recipient blocks unverified senders.', 'ago-mail-pilot' );
         }
         return '';
     }
 
     public function handle_clear_log(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You do not have permission.', 'ago-smtp' ) );
+            wp_die( esc_html__( 'You do not have permission.', 'ago-mail-pilot' ) );
         }
-        check_admin_referer( 'ago_smtp_clear_log' );
+        check_admin_referer( 'agomp_clear_log' );
         delete_option( self::LOG_KEY );
-        $this->redirect_back( 'success', __( 'Log cleared.', 'ago-smtp' ) );
+        $this->redirect_back( 'success', __( 'Log cleared.', 'ago-mail-pilot' ) );
     }
 
     public function handle_dns_audit(): void {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'You do not have permission.', 'ago-smtp' ) );
+            wp_die( esc_html__( 'You do not have permission.', 'ago-mail-pilot' ) );
         }
-        check_admin_referer( 'ago_smtp_dns_audit' );
+        check_admin_referer( 'agomp_dns_audit' );
 
         $domain   = sanitize_text_field( wp_unslash( $_POST['dns_domain'] ?? '' ) );
         $selector = sanitize_text_field( wp_unslash( $_POST['dns_selector'] ?? 'default' ) );
@@ -225,7 +227,7 @@ class Plugin {
         $result = DnsAuditor::audit( $domain, $selector ?: 'default' );
 
         set_transient(
-            'ago_smtp_dns_result_' . get_current_user_id(),
+            'agomp_dns_result_' . get_current_user_id(),
             [
                 'domain'   => $domain,
                 'selector' => $selector ?: 'default',
@@ -234,16 +236,16 @@ class Plugin {
             300
         );
 
-        wp_safe_redirect( admin_url( 'admin.php?page=ago-smtp#dns' ) );
+        wp_safe_redirect( admin_url( 'admin.php?page=ago-mail-pilot#dns' ) );
         exit;
     }
 
     private function redirect_back( string $status, string $message ): void {
-        set_transient( 'ago_smtp_notice_' . get_current_user_id(), [
+        set_transient( 'agomp_notice_' . get_current_user_id(), [
             'status'  => $status,
             'message' => $message,
         ], 60 );
-        wp_safe_redirect( admin_url( 'admin.php?page=ago-smtp' ) );
+        wp_safe_redirect( admin_url( 'admin.php?page=ago-mail-pilot' ) );
         exit;
     }
 
@@ -252,13 +254,13 @@ class Plugin {
      */
     public function maybe_legacy_password_notice(): void {
         $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-        if ( ! $screen || ! str_contains( $screen->id ?? '', 'ago-smtp' ) ) {
+        if ( ! $screen || ! str_contains( $screen->id ?? '', 'ago-mail-pilot' ) ) {
             return;
         }
         $s = get_option( self::OPTION_KEY, [] );
         if ( ! empty( $s['password'] ) && Mailer::is_legacy_password( (string) $s['password'] ) ) {
             echo '<div class="notice notice-warning"><p>'
-                . esc_html__( 'Re-enter the SMTP password: the storage format was upgraded and the old encrypted value cannot be decoded.', 'ago-smtp' )
+                . esc_html__( 'Re-enter the SMTP password: the storage format was upgraded and the old encrypted value cannot be decoded.', 'ago-mail-pilot' )
                 . '</p></div>';
         }
     }

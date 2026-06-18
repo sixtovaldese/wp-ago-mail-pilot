@@ -1,11 +1,11 @@
-=== aGo SMTP ===
-Contributors: sixtovaldese
+=== aGo Mail Pilot ===
+Contributors: agolab
 Donate link: https://paypal.me/sixtovaldes
 Tags: smtp, email, mail, phpmailer, mail-log
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ SMTP for WordPress with 8 provider presets, step-by-step credentials wizard, DNS
 
 == Description ==
 
-aGo SMTP routes WordPress emails through the SMTP server of your choice. Pick a preset for one of 8 supported providers and the in-plugin wizard walks you, step by step, through how to obtain a username and password for that exact provider, with direct links to the right page in the provider dashboard.
+aGo Mail Pilot routes WordPress emails through the SMTP server of your choice. Pick a preset for one of 8 supported providers and the in-plugin wizard walks you, step by step, through how to obtain a username and password for that exact provider, with direct links to the right page in the provider dashboard.
 
 This is the differentiator from other SMTP plugins: every preset includes an explainer that opens automatically, in the user's language (English, Spanish, Brazilian Portuguese). End users no longer have to leave WordPress to figure out that Gmail needs an App Password, SendGrid uses the literal username "apikey", or Amazon SES uses dedicated SMTP credentials and not the AWS account credentials.
 
@@ -38,13 +38,13 @@ This is the differentiator from other SMTP plugins: every preset includes an exp
 * Recent email log (last 10 outgoing messages, stored in the WordPress options table; no extra database table).
 * **DNS health check**: on-demand audit of SPF, DKIM and DMARC records for your sending domain. Read-only DNS queries; nothing is modified.
 * **Encrypted password storage**: AES-256-CBC tied to your WordPress AUTH_KEY. Falls back to base64 only when the WordPress secret keys are placeholders.
-* **Optional override**: define `AGO_SMTP_PASSWORD` as a constant in `wp-config.php` and the plugin reads the password from the constant, never from the database.
+* **Optional override**: define `AGOMP_PASSWORD` as a constant in `wp-config.php` and the plugin reads the password from the constant, never from the database.
 * **Failure rate alerts**: optional email to the admin when the failure rate across the last N emails exceeds a configurable threshold. Throttled to one alert per 24 hours.
 * No third-party API calls on its own. No remote license server. No telemetry. No premium upsell that breaks the WordPress.org guidelines.
 
 == External services ==
 
-This plugin does not call any third-party API on its own. It connects to the SMTP server that you, the site administrator, configure under aGo Tools, SMTP.
+This plugin does not call any third-party API on its own. It connects to the SMTP server that you, the site administrator, configure under aGo Tools, Mail Pilot.
 
 When you save credentials and WordPress sends an email (password reset, plugin notification, contact form, etc.), the plugin opens a standard SMTP connection to the host and port you entered, authenticates with your username and password, and delivers the message. The destination of that connection is whatever server you choose (your own mail server, your hosting provider's mail server, or a third-party transactional email provider such as Gmail, SendGrid, Amazon SES, Brevo, Resend, MailerSend, SMTP2GO, Acumbamail or any other SMTP service).
 
@@ -57,17 +57,17 @@ Each SMTP provider has its own terms and privacy policy. Please review them befo
 * Amazon SES: https://aws.amazon.com/privacy/ and https://aws.amazon.com/service-terms/
 * Brevo: https://www.brevo.com/legal/privacypolicy/ and https://www.brevo.com/legal/termsofuse/
 * Resend: https://resend.com/legal/privacy-policy and https://resend.com/legal/terms-of-service
-* MailerSend: https://www.mailersend.com/legal/privacy-policy and https://www.mailersend.com/legal/terms-of-service
-* SMTP2GO: https://www.smtp2go.com/privacy-policy/ and https://www.smtp2go.com/terms-of-service/
-* Acumbamail: https://acumbamail.com/politica-de-privacidad/ and https://acumbamail.com/condiciones-de-uso/
+* MailerSend: https://www.mailersend.com/legal/privacy-policy and https://www.mailersend.com/legal/terms-of-use
+* SMTP2GO: https://www.smtp2go.com/privacy and https://www.smtp2go.com/terms
+* Acumbamail: https://acumbamail.com/politica-de-privacidad/ and https://acumbamail.com/terminos-de-uso/
 
 No data leaves your site without an explicit administrator action (saving SMTP credentials, running a DNS check) and a WordPress event triggering an email. The plugin does not contact any aGo Lab server at any point.
 
 == Installation ==
 
-1. Upload the `ago-smtp` folder to `/wp-content/plugins/` or install via the Plugins screen and upload the zip.
+1. Upload the `ago-mail-pilot` folder to `/wp-content/plugins/` or install via the Plugins screen and upload the zip.
 2. Activate the plugin through the Plugins menu in WordPress.
-3. Go to aGo Tools, then SMTP.
+3. Go to aGo Tools, then Mail Pilot.
 4. Pick a provider preset. The credentials wizard opens automatically with step-by-step instructions and direct links.
 5. Save the settings and send a test email.
 6. Run the DNS health check on your sending domain to confirm SPF, DKIM and DMARC are correctly set.
@@ -82,7 +82,7 @@ Most delivery issues come from sender authentication, not the plugin. Run the bu
 
 In the WordPress options table, encrypted with AES-256-CBC using your site's `AUTH_KEY`. If your secret keys are still the WordPress placeholders, the plugin falls back to base64 encoding and reminds you to regenerate the salts.
 
-For maximum hardening, define `AGO_SMTP_PASSWORD` as a constant in your `wp-config.php`. When the constant is set, the plugin uses it instead of the stored value, so the password never lives in the database.
+For maximum hardening, define `AGOMP_PASSWORD` as a constant in your `wp-config.php`. When the constant is set, the plugin uses it instead of the stored value, so the password never lives in the database.
 
 = Does the plugin send any data to a third party? =
 
@@ -106,14 +106,14 @@ The plugin uses your WordPress site language. UI, the credentials wizard, the DN
 
 == Privacy ==
 
-aGo SMTP does not call any third-party API on its own. It does not collect telemetry, usage statistics or personal data. The only outbound network traffic is the SMTP connection that you, the administrator, explicitly configure under aGo Tools, SMTP.
+aGo Mail Pilot does not call any third-party API on its own. It does not collect telemetry, usage statistics or personal data. The only outbound network traffic is the SMTP connection that you, the administrator, explicitly configure under aGo Tools, Mail Pilot.
 
 The plugin stores the following on your site:
 
-* SMTP settings (host, port, encryption, username and AES-256-CBC encrypted password) in the `wp_options` table under the key `ago_smtp_settings`.
-* Email delivery log entries (recipient, subject, status, error message, timestamp) in the `wp_options` table under the key `ago_smtp_log`, capped at the last 10 entries. No custom database tables are created.
+* SMTP settings (host, port, encryption, username and AES-256-CBC encrypted password) in the `wp_options` table under the key `agomp_settings`.
+* Email delivery log entries (recipient, subject, status, error message, timestamp) in the `wp_options` table under the key `agomp_log`, capped at the last 10 entries. No custom database tables are created.
 
-Deactivating the plugin does not delete the stored data. Uninstalling the plugin deletes both `ago_smtp_settings` and `ago_smtp_log` and unschedules the hourly alert cron event.
+Deactivating the plugin does not delete the stored data. Uninstalling the plugin deletes both `agomp_settings` and `agomp_log` and unschedules the hourly alert cron event.
 
 == Screenshots ==
 
@@ -124,12 +124,6 @@ Deactivating the plugin does not delete the stored data. Uninstalling the plugin
 
 == Changelog ==
 
-= 1.0.1 =
-* Fix: `load_plugin_textdomain()` properly invoked for bundled translations (previous build relied on stale Redis cache layer).
-* Fix: removed legacy `install_translations()` that copied `.l10n.php` files to `WP_LANG_DIR/plugins/`.
-* Fix: ABSPATH guard added to `.l10n.php` files.
-* Fix: translator comments added on `__()` calls with placeholders.
-
 = 1.0.0 =
 * Initial release.
 * 8 provider presets: Gmail, SendGrid, Amazon SES, Brevo, Resend, MailerSend, SMTP2GO, Acumbamail.
@@ -137,14 +131,11 @@ Deactivating the plugin does not delete the stored data. Uninstalling the plugin
 * Test email with detailed SMTP error feedback and heuristic hint.
 * DNS health check (SPF, DKIM, DMARC) on-demand.
 * AES-256-CBC encrypted password storage tied to `AUTH_KEY`.
-* Optional `AGO_SMTP_PASSWORD` constant override in `wp-config.php`.
+* Optional `AGOMP_PASSWORD` constant override in `wp-config.php`.
 * Failure rate alerts with configurable threshold, minimum sample size and recipient.
 * Recent log of last 10 outgoing emails in `wp_options` (no custom tables).
 
 == Upgrade Notice ==
-
-= 1.0.1 =
-Translation loading fixes. Recommended for all users.
 
 = 1.0.0 =
 Initial release.

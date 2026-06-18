@@ -1,6 +1,6 @@
 <?php
 
-namespace AgoLab\Smtp;
+namespace AgoLab\MailPilot;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,7 +39,7 @@ class Mailer {
     }
 
     /**
-     * Store password. Preferencia: definir constante `AGO_SMTP_PASSWORD` en wp-config.php.
+     * Store password. Preferencia: definir constante `AGOMP_PASSWORD` en wp-config.php.
      * Si no se define, se guarda en wp_options con prefijo "aes:" + AES-256-CBC encrypted
      * usando AUTH_KEY (con fallback a LOGGED_IN_KEY si AUTH_KEY no esta seteada).
      */
@@ -62,8 +62,8 @@ class Mailer {
      * Read password. Soporta tres formatos: aes:, b64:, y constante en wp-config.
      */
     public static function read_password( string $stored ): string {
-        if ( defined( 'AGO_SMTP_PASSWORD' ) && '' !== AGO_SMTP_PASSWORD ) {
-            return (string) AGO_SMTP_PASSWORD;
+        if ( defined( 'AGOMP_PASSWORD' ) && '' !== AGOMP_PASSWORD ) {
+            return (string) AGOMP_PASSWORD;
         }
         if ( '' === $stored ) {
             return '';

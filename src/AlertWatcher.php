@@ -1,6 +1,6 @@
 <?php
 
-namespace AgoLab\Smtp;
+namespace AgoLab\MailPilot;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -11,21 +11,21 @@ defined( 'ABSPATH' ) || exit;
  */
 class AlertWatcher {
 
-    private const TRANSIENT_LAST = 'ago_smtp_alert_last';
+    private const TRANSIENT_LAST = 'agomp_alert_last';
     private const THROTTLE_SECS  = DAY_IN_SECONDS;
 
     public function __construct() {
-        add_action( 'ago_smtp_alert_tick', [ $this, 'tick' ] );
+        add_action( 'agomp_alert_tick', [ $this, 'tick' ] );
 
-        if ( ! wp_next_scheduled( 'ago_smtp_alert_tick' ) ) {
-            wp_schedule_event( time() + HOUR_IN_SECONDS, 'hourly', 'ago_smtp_alert_tick' );
+        if ( ! wp_next_scheduled( 'agomp_alert_tick' ) ) {
+            wp_schedule_event( time() + HOUR_IN_SECONDS, 'hourly', 'agomp_alert_tick' );
         }
     }
 
     public static function deactivate(): void {
-        $ts = wp_next_scheduled( 'ago_smtp_alert_tick' );
+        $ts = wp_next_scheduled( 'agomp_alert_tick' );
         if ( $ts ) {
-            wp_unschedule_event( $ts, 'ago_smtp_alert_tick' );
+            wp_unschedule_event( $ts, 'agomp_alert_tick' );
         }
     }
 
@@ -65,18 +65,25 @@ class AlertWatcher {
         $site = get_bloginfo( 'name' );
         $subj = sprintf(
             /* translators: %s: site name */
-            __( '[%s] SMTP failure rate alert', 'ago-smtp' ),
+            __( '[%s] SMTP failure rate alert', 'ago-mail-pilot' ),
             $site
         );
         $body = sprintf(
             /* translators: 1: failure rate, 2: total emails, 3: failures, 4: admin URL */
-            __( "Your site %4\$s is failing to deliver email.\n\nFailure rate in the last %2\$d outgoing emails: %1\$d%% (%3\$d failed).\n\nReview the log: %5\$s\nRun the DNS audit: %6\$s\n\nThis alert is throttled to one per 24 hours.", 'ago-smtp' ),
+            __( 'Your site %4$s is failing to deliver email.
+
+Failure rate in the last %2$d outgoing emails: %1$d%% (%3$d failed).
+
+Review the log: %5$s
+Run the DNS audit: %6$s
+
+This alert is throttled to one per 24 hours.', 'ago-mail-pilot' ),
             $rate,
             $total,
             $fail,
             $site,
-            admin_url( 'admin.php?page=ago-smtp#log' ),
-            admin_url( 'admin.php?page=ago-smtp#dns' )
+            admin_url( 'admin.php?page=ago-mail-pilot#log' ),
+            admin_url( 'admin.php?page=ago-mail-pilot#dns' )
         );
 
         wp_mail( $to, $subj, $body );

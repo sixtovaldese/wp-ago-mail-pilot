@@ -1,6 +1,6 @@
 <?php
 
-namespace AgoLab\Smtp;
+namespace AgoLab\MailPilot;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,9 +18,9 @@ class DnsAuditor {
         $domain = trim( strtolower( $domain ) );
         if ( '' === $domain || ! preg_match( '/^[a-z0-9.\-]+\.[a-z]{2,}$/', $domain ) ) {
             return [
-                'spf'   => self::result( false, '', __( 'Invalid domain.', 'ago-smtp' ) ),
-                'dkim'  => self::result( false, '', __( 'Invalid domain.', 'ago-smtp' ) ),
-                'dmarc' => self::result( false, '', __( 'Invalid domain.', 'ago-smtp' ) ),
+                'spf'   => self::result( false, '', __( 'Invalid domain.', 'ago-mail-pilot' ) ),
+                'dkim'  => self::result( false, '', __( 'Invalid domain.', 'ago-mail-pilot' ) ),
+                'dmarc' => self::result( false, '', __( 'Invalid domain.', 'ago-mail-pilot' ) ),
             ];
         }
 
@@ -35,14 +35,14 @@ class DnsAuditor {
         $records = self::txt( $domain );
         foreach ( $records as $r ) {
             if ( str_starts_with( strtolower( $r ), 'v=spf1' ) ) {
-                $msg = __( 'SPF record found. Make sure it includes your sending provider (e.g. include:sendgrid.net, include:amazonses.com, include:_spf.brevo.com).', 'ago-smtp' );
+                $msg = __( 'SPF record found. Make sure it includes your sending provider (e.g. include:sendgrid.net, include:amazonses.com, include:_spf.brevo.com).', 'ago-mail-pilot' );
                 return self::result( true, $r, $msg );
             }
         }
         return self::result(
             false,
             '',
-            __( 'No SPF (v=spf1) TXT record. Without SPF most providers will mark your emails as spam. Add a TXT record at the domain root.', 'ago-smtp' )
+            __( 'No SPF (v=spf1) TXT record. Without SPF most providers will mark your emails as spam. Add a TXT record at the domain root.', 'ago-mail-pilot' )
         );
     }
 
@@ -56,7 +56,7 @@ class DnsAuditor {
                     $r,
                     sprintf(
                         /* translators: %s: selector used */
-                        __( 'DKIM record found at selector "%s". Confirm the selector matches the one your provider uses.', 'ago-smtp' ),
+                        __( 'DKIM record found at selector "%s". Confirm the selector matches the one your provider uses.', 'ago-mail-pilot' ),
                         $selector
                     )
                 );
@@ -67,7 +67,7 @@ class DnsAuditor {
             '',
             sprintf(
                 /* translators: 1: dkim hostname looked up, 2: selector */
-                __( 'No DKIM record at %1$s. Your provider tells you which selector to use (often "default", "google", "s1", "selector1", or your provider name). Re-run with the correct selector. Without DKIM your emails fail authentication.', 'ago-smtp' ),
+                __( 'No DKIM record at %1$s. Your provider tells you which selector to use (often "default", "google", "s1", "selector1", or your provider name). Re-run with the correct selector. Without DKIM your emails fail authentication.', 'ago-mail-pilot' ),
                 $host,
                 $selector
             )
@@ -87,7 +87,7 @@ class DnsAuditor {
                     $r,
                     sprintf(
                         /* translators: %s: dmarc policy (none, quarantine, reject) */
-                        __( 'DMARC record found with policy "%s". For new domains start with p=none and tighten gradually.', 'ago-smtp' ),
+                        __( 'DMARC record found with policy "%s". For new domains start with p=none and tighten gradually.', 'ago-mail-pilot' ),
                         $policy
                     )
                 );
@@ -96,7 +96,7 @@ class DnsAuditor {
         return self::result(
             false,
             '',
-            __( 'No DMARC record at _dmarc.<domain>. Add a TXT record with at least: v=DMARC1; p=none; rua=mailto:postmaster@<domain>. Gmail and Yahoo require DMARC for bulk senders since 2024.', 'ago-smtp' )
+            __( 'No DMARC record at _dmarc.<domain>. Add a TXT record with at least: v=DMARC1; p=none; rua=mailto:postmaster@<domain>. Gmail and Yahoo require DMARC for bulk senders since 2024.', 'ago-mail-pilot' )
         );
     }
 

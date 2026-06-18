@@ -1,14 +1,7 @@
-/**
- * aGo SMTP, admin UI helpers
- *
- * Solo dos responsabilidades:
- *  1. Auto-rellenar host/port/encryption al elegir preset.
- *  2. Mostrar el wizard "Como obtener credenciales" del preset seleccionado.
- */
 ( function () {
     'use strict';
 
-    var data = window.agoSmtpData || { presets: {}, guides: {} };
+    var data = window.agompData || { presets: {}, guides: {} };
 
     var $preset     = document.getElementById( 'ago-preset' );
     var $host       = document.getElementById( 'ago-host' );

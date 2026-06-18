@@ -1,17 +1,17 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 return [
-'x-generator' => 'aGo SMTP',
+'x-generator' => 'aGo Mail Pilot',
 'translation-revision-date' => '2026-05-17',
 'plural-forms' => 'nplurals=2; plural=n != 1;',
-'project-id-version' => 'aGo SMTP 1.0.0',
+'project-id-version' => 'aGo Mail Pilot 1.0.0',
 'language' => 'es',
 'messages' => [
 
 // UI core
 'aGo Tools' => 'aGo Herramientas',
-'aGo SMTP' => 'aGo SMTP',
-'SMTP' => 'SMTP',
+'aGo Mail Pilot' => 'aGo Mail Pilot',
+'Mail Pilot' => 'Mail Pilot',
 'You do not have permission.' => 'No tienes permiso.',
 'Settings saved.' => 'Configuración guardada.',
 'Invalid From Email address.' => 'Dirección de remitente no válida.',
@@ -33,7 +33,7 @@ return [
 'Password' => 'Contraseña',
 'Leave blank to keep current password' => 'Déjalo vacío para mantener la contraseña actual',
 'Stored encrypted (AES-256-CBC) tied to your WordPress AUTH_KEY.' => 'Almacenada cifrada (AES-256-CBC) usando tu AUTH_KEY de WordPress.',
-'For higher security, define <code>AGO_SMTP_PASSWORD</code> in <code>wp-config.php</code>. When defined, the constant overrides this field.' => 'Para mayor seguridad, define <code>AGO_SMTP_PASSWORD</code> en <code>wp-config.php</code>. Cuando está definida, la constante sobrescribe este campo.',
+'For higher security, define <code>AGOMP_PASSWORD</code> in <code>wp-config.php</code>. When defined, the constant overrides this field.' => 'Para mayor seguridad, define <code>AGOMP_PASSWORD</code> en <code>wp-config.php</code>. Cuando está definida, la constante sobrescribe este campo.',
 'From name' => 'Nombre del remitente',
 'From email' => 'Email del remitente',
 'Save settings' => 'Guardar configuración',
@@ -49,12 +49,12 @@ return [
 'Cannot connect to the SMTP host. Check host name, port and firewall. Most providers use 587 (TLS) or 465 (SSL).' => 'No se puede conectar al servidor SMTP. Revisa host, puerto y firewall. La mayoría usa 587 (TLS) o 465 (SSL).',
 'The From email is not authorized by the provider. Verify the sender or the whole sending domain in the provider dashboard.' => 'El email remitente no está autorizado por el proveedor. Verifica el remitente o el dominio completo en el panel del proveedor.',
 'The provider rejected the message. Usually SPF, DKIM or DMARC is wrong, or the recipient blocks unverified senders.' => 'El proveedor rechazó el mensaje. Usualmente SPF, DKIM o DMARC están mal, o el destinatario bloquea remitentes no verificados.',
-'[%s] aGo SMTP test email' => '[%s] Email de prueba aGo SMTP',
+'[%s] aGo Mail Pilot test email' => '[%s] Email de prueba aGo Mail Pilot',
 'If you can read this, the SMTP configuration is working.
 
-Sent by aGo SMTP.' => 'Si puedes leer esto, la configuración SMTP funciona.
+Sent by aGo Mail Pilot.' => 'Si puedes leer esto, la configuración SMTP funciona.
 
-Enviado por aGo SMTP.',
+Enviado por aGo Mail Pilot.',
 
 // DNS auditor
 'DNS health check (SPF, DKIM, DMARC)' => 'Diagnóstico DNS (SPF, DKIM, DMARC)',
@@ -84,7 +84,21 @@ Enviado por aGo SMTP.',
 'Do not alert until at least this many emails have been sent.' => 'No avisar hasta haber enviado al menos esta cantidad de emails.',
 'Alert recipient' => 'Destinatario de la alerta',
 '[%s] SMTP failure rate alert' => '[%s] Alerta de tasa de fallos SMTP',
-"Your site %4\$s is failing to deliver email.\n\nFailure rate in the last %2\$d outgoing emails: %1\$d%% (%3\$d failed).\n\nReview the log: %5\$s\nRun the DNS audit: %6\$s\n\nThis alert is throttled to one per 24 hours." => "Tu sitio %4\$s no está entregando emails correctamente.\n\nTasa de fallos en los últimos %2\$d envíos: %1\$d%% (%3\$d fallaron).\n\nRevisa el registro: %5\$s\nCorre el diagnóstico DNS: %6\$s\n\nEsta alerta está limitada a una por 24 horas.",
+'Your site %4$s is failing to deliver email.
+
+Failure rate in the last %2$d outgoing emails: %1$d%% (%3$d failed).
+
+Review the log: %5$s
+Run the DNS audit: %6$s
+
+This alert is throttled to one per 24 hours.' => 'Tu sitio %4$s no está entregando emails correctamente.
+
+Tasa de fallos en los últimos %2$d envíos: %1$d%% (%3$d fallaron).
+
+Revisa el registro: %5$s
+Corre el diagnóstico DNS: %6$s
+
+Esta alerta está limitada a una por 24 horas.',
 
 // Email log
 'Recent email log' => 'Registro de emails reciente',

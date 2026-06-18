@@ -1,6 +1,6 @@
 <?php
 
-namespace AgoLab\Smtp;
+namespace AgoLab\MailPilot;
 
 defined( 'ABSPATH' ) || exit;
 

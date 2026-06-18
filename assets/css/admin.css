@@ -1,6 +1,3 @@
-/* aGo SMTP Admin Styles */
-
-/* Layout */
 .ago-layout {
     display: flex;
     gap: 20px;
@@ -27,7 +24,6 @@
     max-width: 100% !important;
 }
 
-/* Form table */
 .ago-form-table th {
     width: 140px;
     padding: 12px 10px 12px 0;
@@ -37,7 +33,6 @@
     padding: 8px 10px;
 }
 
-/* Status messages */
 .ago-status {
     font-size: 13px;
     color: #555;
@@ -54,27 +49,25 @@
     font-weight: 600;
 }
 
-/* SMTP status banner */
-.ago-smtp-status {
+.ago-mail-pilot-status {
     padding: 10px 14px;
     border-radius: 4px;
     margin-bottom: 16px;
     font-size: 13px;
 }
 
-.ago-smtp-status.status-ok {
+.ago-mail-pilot-status.status-ok {
     background: #edfaef;
     border: 1px solid #00a32a;
     color: #00a32a;
 }
 
-.ago-smtp-status.status-fail {
+.ago-mail-pilot-status.status-fail {
     background: #fcf0f1;
     border: 1px solid #d63638;
     color: #d63638;
 }
 
-/* Log table */
 .ago-log-table {
     margin-top: 10px;
 }
@@ -102,7 +95,6 @@
     margin-top: 2px;
 }
 
-/* Features list */
 .ago-features {
     list-style: none;
     padding: 0;
@@ -122,7 +114,6 @@
     margin-right: 8px;
 }
 
-/* Donation */
 .ago-donation {
     text-align: center;
 }
@@ -179,7 +170,6 @@
     margin-top: 8px;
 }
 
-/* Footer */
 .ago-footer {
     text-align: center;
     padding: 16px 0;
@@ -206,7 +196,6 @@
     text-decoration: none;
 }
 
-/* Credentials wizard drawer */
 .ago-guide-box {
     background: #f6f7f7;
     border-left: 3px solid #2271b1;
