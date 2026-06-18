@@ -117,10 +117,10 @@ Deactivating the plugin does not delete the stored data. Uninstalling the plugin
 
 == Screenshots ==
 
-1. SMTP configuration screen with provider preset selector and the credentials wizard expanded.
-2. DNS health check results for a sending domain (SPF / DKIM / DMARC).
-3. Failure rate alerts settings.
-4. Sidebar with quick links, About, Other aGo Lab plugins and donation cards.
+1. SMTP configuration: provider preset selector and the step-by-step credentials wizard (Gmail example).
+2. DNS health check results (SPF, DKIM, DMARC) for your sending domain.
+3. SMTP connection settings with encrypted password storage and the feature overview.
+4. Failure rate alerts, with the aGo Lab sidebar (other plugins and support).
 
 == Changelog ==
 
