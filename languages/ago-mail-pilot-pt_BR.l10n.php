@@ -116,6 +116,7 @@ Este alerta é limitado a um por 24 horas.',
 
 // Sidebar
 'Quick links' => 'Links rápidos',
+'Documentation' => 'Documentação',
 'Generate WordPress secret keys' => 'Gerar chaves secretas do WordPress',
 'Test deliverability (mail-tester)' => 'Testar entregabilidade (mail-tester)',
 'DNS lookup (MXToolbox)' => 'Consulta DNS (MXToolbox)',

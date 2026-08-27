@@ -318,6 +318,7 @@ class Page {
                     <div class="card ago-card">
                         <h3><?php esc_html_e( 'Quick links', 'ago-mail-pilot' ); ?></h3>
                         <ul class="ago-features" style="list-style:none;padding:0;margin:0">
+                            <li><a href="https://ago.cl/herramientas/wordpress/ago-mail-pilot/docs" target="_blank" rel="noopener"><?php esc_html_e( 'Documentation', 'ago-mail-pilot' ); ?></a></li>
                             <li><a href="https://api.wordpress.org/secret-key/1.1/salt/" target="_blank" rel="noopener"><?php esc_html_e( 'Generate WordPress secret keys', 'ago-mail-pilot' ); ?></a></li>
                             <li><a href="https://www.mail-tester.com/" target="_blank" rel="noopener"><?php esc_html_e( 'Test deliverability (mail-tester)', 'ago-mail-pilot' ); ?></a></li>
                             <li><a href="https://mxtoolbox.com/SuperTool.aspx" target="_blank" rel="noopener"><?php esc_html_e( 'DNS lookup (MXToolbox)', 'ago-mail-pilot' ); ?></a></li>
